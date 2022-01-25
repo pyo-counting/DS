@@ -6,5 +6,9 @@ int		main(void) {
 
 	for (int i=0;i<10;i++)
 		push_back(header, i);
-	printf("front : %d, back: %d\n", front(header), back(header));
+	printf("front : %p, back: %p\n", front(header), back(header));
+	printf("size : %d\n", header->size);
+	erase(header, header->first->next);
+	printf("front : %p, back: %p\n", front(header), back(header));
+	printf("size : %d\n", header->size);
 }
