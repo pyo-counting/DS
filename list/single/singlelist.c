@@ -94,6 +94,18 @@ t_SListHeader* SListHeaderNew() {
 	return temp;
 }
 
+t_SListNode* front(SList* list) {
+	if (list == NULL)
+		return NULL;
+	return list->header->first;
+}
+
+t_SListNode* back(SList* list) {
+	if (list == NULL)
+		return NULL;
+	return list->header->last;
+}
+
 SList* SListNew() {
 	SList* temp;
 	temp = calloc(1, sizeof(SList));

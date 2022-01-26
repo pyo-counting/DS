@@ -32,8 +32,8 @@ void pop_front(t_SListHeader*);
 void pop_back(t_SListHeader*);
 
 // front, back
-t_SListNode* front(t_SListHeader*);
-t_SListNode* back(t_SListHeader*);
+t_SListNode* front(SList*);
+t_SListNode* back(SList*);
 
 // New List, Header, Node
 t_SListNode*	SListNodeNew(int);

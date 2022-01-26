@@ -21,4 +21,6 @@ int		main(void) {
 	for (t_SListNode* temp=slist->header->first;temp;temp=temp->next)
 		printf("%d ", temp->data);
 	putchar('\n');
+
+	printf("front: %d, back: %d\n", front(slist)->data, back(slist)->data);
 }
