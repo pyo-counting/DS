@@ -4,12 +4,39 @@ package ds.linear.list;
 import java.util.*;
 
 public class SinglyLinkedList<E> implements List<E> {
+
+    public static void main(String[] args) {
+        SinglyLinkedList<Integer> list1 = new SinglyLinkedList<>();
+        list1.add(2);
+        list1.add(3);
+        list1.add(4);
+        list1.addFirst(1);
+        list1.addFirst(0);
+        list1.add(7);
+        list1.add(8);
+        list1.add(0, -1);
+        list1.add(0, -2);
+        list1.add(7, 6);
+        list1.add(7, 5);
+
+        // Standard output result: -2 -1 0 1 2 3 4 5 6 7 8
+        while (list1.size() != 0)
+            System.out.print(list1.removeFirst() + " ");
+    }
+
     private Node<E> head, tail;
     private int length;
 
     @Override
     public boolean add(E e) {
-        add(length, e);
+        if (length == 0)
+            addFirst(e);
+        else {
+            Node<E> newNode = new Node<>(e);
+            tail.setNext(newNode);
+            tail = newNode;
+            length++;
+        }
         return true;
     }
 
@@ -17,27 +44,25 @@ public class SinglyLinkedList<E> implements List<E> {
     public void add(int index, E e) {
         if (index > length || index < 0)
             throw new IndexOutOfBoundsException("Index parameter is out of bound");
-
-        if (index == 0) {
-            head = new Node<>(e, head);
-            if (length == 0)
-                tail = head;
-        } else if (index == length) {
-            Node<E> newNode = new Node<>(e);
-            tail.setNext(newNode);
-            tail = newNode;
-        } else {
+        else if (index == 0)
+            addFirst(e);
+        else if (index == length)
+            add(e);
+        else {
             Node<E> cursor = head;
             for (int cursorIndex = 0; cursorIndex != index - 1; cursorIndex++)
                 cursor = cursor.getNext();
             Node<E> newNode = new Node<>(e, cursor.getNext());
             cursor.setNext(newNode);
+            length++;
         }
-        length++;
     }
 
     public void addFirst(E e) {
-        add(0, e);
+        head = new Node<>(e, head);
+        if (length == 0)
+            tail = head;
+        length++;
     }
 
     public E remove() {
@@ -50,28 +75,33 @@ public class SinglyLinkedList<E> implements List<E> {
             throw new NoSuchElementException("List is empty");
         else if (index < 0 || index >= length)
             throw new IndexOutOfBoundsException("Index parameter is out of bound");
-
-        E removedData = null;
-        if (index == 0) {
-            removedData = head.getData();
-            head = head.getNext();
-            if (length == 1)
-                tail = head;
-        } else {
+        else if (index == 0)
+            return removeFirst();
+        else {
             Node<E> cursor = head;
+            E removedData = null;
             for (int cursorIndex = 0; cursorIndex != index - 1; cursorIndex++)
                 cursor = cursor.getNext();
             removedData = cursor.getNext().getData();
             cursor.setNext(cursor.getNext().getNext());
             if (index == length - 1)
                 tail = cursor;
+            length--;
+            return removedData;
         }
-        length--;
-        return removedData;
     }
 
     public E removeFirst() {
-        return remove(0);
+        if (length == 0)
+            throw new NoSuchElementException("List is empty");
+        else {
+            E removedData = head.getData();
+            head = head.getNext();
+            if (length == 1)
+                tail = head;
+            length--;
+            return removedData;
+        }
     }
 
     @Override

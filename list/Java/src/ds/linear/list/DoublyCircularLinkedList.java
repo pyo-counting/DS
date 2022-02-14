@@ -4,6 +4,19 @@ import java.util.*;
 
 public class DoublyCircularLinkedList<E> implements List<E> {
 
+    public static void main(String[] args) {
+        DoublyCircularLinkedList<Integer> list2 = new DoublyCircularLinkedList<>();
+
+        list2.add(0, 0);
+        list2.add(1, 3);
+        list2.add(1, 1);
+        list2.add(2, 2);
+
+        // standrad output result: 0 1 2 3
+        while (list2.size() != 0)
+            System.out.print(list2.removeFirst() + " ");
+    }
+
     private Node<E> head;
     private int length;
 
