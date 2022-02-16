@@ -1,5 +1,7 @@
 package ds.non_linear.graph;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class MatrixGraph {
@@ -37,16 +39,17 @@ public class MatrixGraph {
             matrix[toVertex][fromVertex] = 0;
     }
 
-    public void DFS(int fromVertex, boolean useRecursive) {
-        if (fromVertex < 0 || fromVertex >= matrix.length)
+    public void DFS(int initVertex, boolean useRecursive) {
+        if (initVertex < 0 || initVertex >= matrix.length)
             throw new IndexOutOfBoundsException("Index parameter is out of bound");
 
         if (useRecursive) {
             boolean[] isSearched = new boolean[matrix.length];
-            recursiveDFS(fromVertex, isSearched);
+            recursiveDFS(initVertex, isSearched);
         } else {
-            stackDFS(fromVertex);
+            stackDFS(initVertex);
         }
+        System.out.println();
     }
 
     private void recursiveDFS(int fromVertex, boolean[] isSearched) {
@@ -59,39 +62,67 @@ public class MatrixGraph {
         }
     }
 
-    private void stackDFS(int fromVertex) {
-//        Stack<Integer> stack = new Stack<>();
-//        boolean[] isSearched = new boolean[matrix.length];
-//
-//        while (true) {
-//            if(!isSearched[fromVertex]) {
-//                System.out.print(fromVertex + " ");
-//                isSearched[fromVertex] = true;
-//            }
-//            for (int toVertex = 0; toVertex < matrix.length; toVertex++) {
-//                if (matrix[fromVertex][toVertex] == 1 && !isSearched[toVertex]) {
-//                    stack.push(fromVertex);
-//                    fromVertex = toVertex;
-//                    break;
-//                } else if (toVertex == matrix.length - 1){
-//                    fromVertex = stack.pop();
-//                }
-//            }
-//            if(stack.empty()){
-//                return;
-//            }
-//        }
+    private void stackDFS(int initVertex) {
+        Stack<Integer> stack = new Stack<>();
+        boolean[] isSearched = new boolean[matrix.length];
+        stack.push(initVertex);
+
+        while(!stack.isEmpty()){
+            int fromVertex = stack.pop();
+            System.out.print(fromVertex + " ");
+            isSearched[fromVertex] = true;
+
+            for (int toVertex = 0; toVertex < matrix.length; toVertex++) {
+                if (!isSearched[toVertex] && matrix[fromVertex][toVertex] == 1){
+                    stack.push(toVertex);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void BFS(int initVertex) {
+        Queue<Integer> queue = new LinkedList<>();
+        boolean[] isSearched = new boolean[matrix.length];
+        queue.offer(initVertex);
+        isSearched[initVertex] = true;
+
+        while (!queue.isEmpty()) {
+            int fromVertex = queue.poll();
+            System.out.print(fromVertex + " ");
+
+            for (int toVertex = 0; toVertex < matrix.length; toVertex++) {
+                if (!isSearched[toVertex] && matrix[fromVertex][toVertex] == 1){
+                    queue.offer(toVertex);
+                    isSearched[toVertex] = true;
+                }
+            }
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
-        MatrixGraph graph = new MatrixGraph(4, false);
-        graph.addEdge(0, 1);
-        graph.addEdge(0, 2);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 0);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 3);
+        MatrixGraph graph1 = new MatrixGraph(4, true);
+        graph1.addEdge(0, 1);
+        graph1.addEdge(0, 2);
+        graph1.addEdge(1, 2);
+        graph1.addEdge(2, 0);
+        graph1.addEdge(1, 3);
+        graph1.addEdge(3, 3);
 
-        graph.DFS(2, false);
+        graph1.DFS(2, true);
+        graph1.DFS(2, false);
+
+        MatrixGraph graph2 = new MatrixGraph(6, false);
+        graph2.addEdge(0, 1);
+        graph2.addEdge(0, 2);
+        graph2.addEdge(1, 3);
+        graph2.addEdge(1, 4);
+        graph2.addEdge(3, 4);
+        graph2.addEdge(3, 5);
+        graph2.addEdge(2, 4);
+        graph2.addEdge(4, 5);
+
+        graph2.BFS(0);
     }
 }
