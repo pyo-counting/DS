@@ -2,13 +2,13 @@
 ## **DoubleLinked List**
 |user|o/x|
 |---|---|
-|Jack-R-lantern||
-|pyo-counting||
+|Jack-R-lantern|o|
+|pyo-counting|o|
 ## **SingledLinked List**
 |user|o/x|
 |---|---|
-|Jack-R-lantern||
-|pyo-counting||
+|Jack-R-lantern|o|
+|pyo-counting|o|
 
 ## **구현 명세**
 > 추상데이터 타입 T\
