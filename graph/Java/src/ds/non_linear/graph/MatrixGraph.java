@@ -2,6 +2,7 @@ package ds.non_linear.graph;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class MatrixGraph {
@@ -56,7 +57,7 @@ public class MatrixGraph {
         System.out.print(fromVertex + " ");
         isSearched[fromVertex] = true;
 
-        for (int toVertex = 0; toVertex < matrix.length; toVertex++) {
+        for (int toVertex = 1; toVertex < matrix.length; toVertex++) {
             if (matrix[fromVertex][toVertex] == 1 && !isSearched[toVertex])
                 recursiveDFS(toVertex, isSearched);
         }
@@ -91,7 +92,7 @@ public class MatrixGraph {
             int fromVertex = queue.poll();
             System.out.print(fromVertex + " ");
 
-            for (int toVertex = 0; toVertex < matrix.length; toVertex++) {
+            for (int toVertex = 1; toVertex < matrix.length; toVertex++) {
                 if (!isSearched[toVertex] && matrix[fromVertex][toVertex] == 1){
                     queue.offer(toVertex);
                     isSearched[toVertex] = true;
@@ -102,27 +103,18 @@ public class MatrixGraph {
     }
 
     public static void main(String[] args) {
-        MatrixGraph graph1 = new MatrixGraph(4, true);
-        graph1.addEdge(0, 1);
-        graph1.addEdge(0, 2);
-        graph1.addEdge(1, 2);
-        graph1.addEdge(2, 0);
-        graph1.addEdge(1, 3);
-        graph1.addEdge(3, 3);
 
-        graph1.DFS(2, true);
-        graph1.DFS(2, false);
+        Scanner scanner = new Scanner(System.in);
+        String input[] = (scanner.nextLine()).split(" ");
+        MatrixGraph graph = new MatrixGraph(Integer.parseInt(input[0] + 1), false);
 
-        MatrixGraph graph2 = new MatrixGraph(6, false);
-        graph2.addEdge(0, 1);
-        graph2.addEdge(0, 2);
-        graph2.addEdge(1, 3);
-        graph2.addEdge(1, 4);
-        graph2.addEdge(3, 4);
-        graph2.addEdge(3, 5);
-        graph2.addEdge(2, 4);
-        graph2.addEdge(4, 5);
+        for(int i = 0; i < Integer.parseInt(input[1]); i++){
+            String input2[] = (scanner.nextLine()).split(" ");
+            graph.addEdge(Integer.parseInt(input2[0]), Integer.parseInt(input2[1]));
+        }
 
-        graph2.BFS(0);
+        graph.DFS(Integer.parseInt(input[2]), true);
+        graph.BFS(Integer.parseInt(input[2]));
     }
 }
+
