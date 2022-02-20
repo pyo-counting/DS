@@ -57,7 +57,7 @@ public class MatrixGraph {
         System.out.print(fromVertex + " ");
         isSearched[fromVertex] = true;
 
-        for (int toVertex = 1; toVertex < matrix.length; toVertex++) {
+        for (int toVertex = 0; toVertex < matrix.length; toVertex++) {
             if (matrix[fromVertex][toVertex] == 1 && !isSearched[toVertex])
                 recursiveDFS(toVertex, isSearched);
         }
@@ -67,19 +67,20 @@ public class MatrixGraph {
         Stack<Integer> stack = new Stack<>();
         boolean[] isSearched = new boolean[matrix.length];
         stack.push(initVertex);
+        isSearched[initVertex] = true;
 
         while(!stack.isEmpty()){
             int fromVertex = stack.pop();
             System.out.print(fromVertex + " ");
-            isSearched[fromVertex] = true;
 
-            for (int toVertex = 0; toVertex < matrix.length; toVertex++) {
+            for (int toVertex = matrix.length - 1; toVertex >= 0; toVertex--) {
                 if (!isSearched[toVertex] && matrix[fromVertex][toVertex] == 1){
                     stack.push(toVertex);
-                    break;
+                    isSearched[toVertex] = true;
                 }
             }
         }
+        System.out.println();
     }
 
     public void BFS(int initVertex) {
@@ -103,18 +104,16 @@ public class MatrixGraph {
     }
 
     public static void main(String[] args) {
+        MatrixGraph graph = new MatrixGraph(4, true);
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 0);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 3);
 
-        Scanner scanner = new Scanner(System.in);
-        String input[] = (scanner.nextLine()).split(" ");
-        MatrixGraph graph = new MatrixGraph(Integer.parseInt(input[0] + 1), false);
-
-        for(int i = 0; i < Integer.parseInt(input[1]); i++){
-            String input2[] = (scanner.nextLine()).split(" ");
-            graph.addEdge(Integer.parseInt(input2[0]), Integer.parseInt(input2[1]));
-        }
-
-        graph.DFS(Integer.parseInt(input[2]), true);
-        graph.BFS(Integer.parseInt(input[2]));
+        graph.DFS(2, true);
+        graph.DFS(2, false);
     }
 }
 
