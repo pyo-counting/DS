@@ -80,7 +80,6 @@ public class MatrixGraph {
                 }
             }
         }
-        System.out.println();
     }
 
     public void BFS(int initVertex) {
@@ -93,7 +92,7 @@ public class MatrixGraph {
             int fromVertex = queue.poll();
             System.out.print(fromVertex + " ");
 
-            for (int toVertex = 1; toVertex < matrix.length; toVertex++) {
+            for (int toVertex = 0; toVertex < matrix.length; toVertex++) {
                 if (!isSearched[toVertex] && matrix[fromVertex][toVertex] == 1){
                     queue.offer(toVertex);
                     isSearched[toVertex] = true;
@@ -114,6 +113,7 @@ public class MatrixGraph {
 
         graph.DFS(2, true);
         graph.DFS(2, false);
+        graph.BFS(2);
     }
 }
 
